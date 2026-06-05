@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Outlet, useNavigate, useLocation, Link } from "react-router";
-import { LayoutDashboard, Package, LogOut, Menu, X, User, Moon, Sun, ChevronDown } from "lucide-react";
-import { Button } from "./ui/button";
+import { LayoutDashboard, Package, LogOut, Menu, X, Moon, Sun, ChevronDown, Tags, Users } from "lucide-react";
 
 interface UserSession {
   id: number;
@@ -78,7 +77,7 @@ export default function Layout() {
     navigate("/login", { replace: true });
   };
 
-  const menuItems = [
+  const baseMenuItems = [
     {
       name: "Dashboard",
       path: "/dashboard",
@@ -89,7 +88,16 @@ export default function Layout() {
       path: "/inventory",
       icon: Package,
     },
+    {
+      name: "Categorías",
+      path: "/categories",
+      icon: Tags,
+    },
   ];
+
+  const menuItems = user?.id_role === 1 || user?.role?.name?.toLowerCase() === "administrador"
+    ? [...baseMenuItems, { name: "Usuarios", path: "/users", icon: Users }]
+    : baseMenuItems;
 
   const getPageTitle = () => {
     const currentItem = menuItems.find((item) => item.path === location.pathname);

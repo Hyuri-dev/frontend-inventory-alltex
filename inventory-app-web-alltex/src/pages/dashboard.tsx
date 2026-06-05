@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import api from "@/api/axios";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -40,7 +40,7 @@ export default function Dashboard() {
       const categories = categoriesRes.data;
       const providers = providersRes.data;
 
-      // Calculate low stock metrics
+      // Calculo de productos con stock bajo
       const lowStock = products.filter((p) => {
         const current = p.current_stock ?? 0;
         return current <= p.stock_minimum;
@@ -217,23 +217,22 @@ export default function Dashboard() {
                       <div className="absolute top-0 scale-0 group-hover:scale-100 transition-all duration-200 bg-slate-900 text-white dark:bg-white dark:text-slate-900 text-[10px] py-1 px-2 rounded-md -translate-y-4 shadow-md font-semibold z-10 whitespace-nowrap">
                         {data.count} {data.count === 1 ? "producto" : "productos"}
                       </div>
-                      
+
                       {/* Bar */}
                       <div
                         style={{ height: `${Math.max(percentage, 8)}%` }}
-                        className={`w-full rounded-t-lg transition-all duration-500 ease-out group-hover:opacity-85 ${
-                          index === 0
+                        className={`w-full rounded-t-lg transition-all duration-500 ease-out group-hover:opacity-85 ${index === 0
                             ? "bg-primary shadow-sm shadow-primary/20"
                             : index === 1
-                            ? "bg-indigo-500/80"
-                            : index === 2
-                            ? "bg-violet-500/70"
-                            : index === 3
-                            ? "bg-purple-500/60"
-                            : "bg-fuchsia-500/50"
-                        }`}
+                              ? "bg-indigo-500/80"
+                              : index === 2
+                                ? "bg-violet-500/70"
+                                : index === 3
+                                  ? "bg-purple-500/60"
+                                  : "bg-fuchsia-500/50"
+                          }`}
                       />
-                      
+
                       {/* Label */}
                       <span className="text-[10px] text-muted-foreground font-semibold mt-2.5 truncate max-w-full text-center">
                         {data.name}

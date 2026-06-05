@@ -62,23 +62,28 @@ export default function Inventory() {
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
 
-  // Filter & Search states
+  // Estados de filtros y busquedas
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
   const [stockAlertFilter, setStockAlertFilter] = useState(false);
 
-  // Dialog Modals states
+  // Estados de los modales
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
-  // Form states
+  // Estados de los formularios
   const [formData, setFormData] = useState(initialFormState);
-  const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
+  const [selectedProductId, setSelectedProductId] = useState<number | null>(
+    null,
+  );
   const [selectedProductName, setSelectedProductName] = useState("");
-  
-  // Feedback states
-  const [alert, setAlert] = useState<{ type: "success" | "error"; message: string } | null>(null);
+
+  // Alertas
+  const [alert, setAlert] = useState<{
+    type: "success" | "error";
+    message: string;
+  } | null>(null);
 
   const loadData = async () => {
     try {
@@ -109,12 +114,13 @@ export default function Inventory() {
   };
 
   // Input change handler
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Convert string form inputs into proper TypeScript/API types
   const parseFormPayload = () => {
     return {
       name: formData.name.trim(),
@@ -122,7 +128,9 @@ export default function Inventory() {
       weight: parseInt(formData.weight, 10),
       id_category: parseInt(formData.id_category, 10),
       id_provider: parseInt(formData.id_provider, 10),
-      current_stock: formData.current_stock ? parseInt(formData.current_stock, 10) : 0,
+      current_stock: formData.current_stock
+        ? parseInt(formData.current_stock, 10)
+        : 0,
       stock_minimum: parseInt(formData.stock_minimum, 10),
       price_buy: parseFloat(formData.price_buy),
       price_sell: parseFloat(formData.price_sell),
@@ -134,10 +142,18 @@ export default function Inventory() {
     setActionLoading(true);
     try {
       const payload = parseFormPayload();
-      
+
       // Simple UI validations
-      if (!payload.name || !payload.code || isNaN(payload.price_buy) || isNaN(payload.price_sell)) {
-        triggerAlert("error", "Por favor completa todos los campos con valores correctos.");
+      if (
+        !payload.name ||
+        !payload.code ||
+        isNaN(payload.price_buy) ||
+        isNaN(payload.price_sell)
+      ) {
+        triggerAlert(
+          "error",
+          "Por favor completa todos los campos con valores correctos.",
+        );
         setActionLoading(false);
         return;
       }
@@ -149,7 +165,8 @@ export default function Inventory() {
       loadData();
     } catch (error: any) {
       console.error("Error creating product:", error);
-      const errMsg = error.response?.data?.message || "Error al crear el producto.";
+      const errMsg =
+        error.response?.data?.message || "Error al crear el producto.";
       triggerAlert("error", errMsg);
     } finally {
       setActionLoading(false);
@@ -175,7 +192,7 @@ export default function Inventory() {
   const handleUpdateProduct = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedProductId) return;
-    
+
     setActionLoading(true);
     try {
       const payload = parseFormPayload();
@@ -186,7 +203,8 @@ export default function Inventory() {
       loadData();
     } catch (error: any) {
       console.error("Error updating product:", error);
-      const errMsg = error.response?.data?.message || "Error al actualizar el producto.";
+      const errMsg =
+        error.response?.data?.message || "Error al actualizar el producto.";
       triggerAlert("error", errMsg);
     } finally {
       setActionLoading(false);
@@ -221,7 +239,8 @@ export default function Inventory() {
       p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       p.code.toLowerCase().includes(searchQuery.toLowerCase());
 
-    const matchesCategory = categoryFilter === "" || p.id_category === parseInt(categoryFilter, 10);
+    const matchesCategory =
+      categoryFilter === "" || p.id_category === parseInt(categoryFilter, 10);
 
     const isLowStock = (p.current_stock ?? 0) <= p.stock_minimum;
     const matchesStockAlert = !stockAlertFilter || isLowStock;
@@ -234,9 +253,12 @@ export default function Inventory() {
       {/* Header Info */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Inventario de Productos</h1>
+          <h1 className="text-2xl font-bold tracking-tight">
+            Inventario de Productos
+          </h1>
           <p className="text-sm text-muted-foreground text-balance">
-            Administra tus existencias, precios, códigos, categorías y proveedores.
+            Administra las existencias, precios, códigos, categorías y
+            proveedores.
           </p>
         </div>
         <Button
@@ -251,12 +273,12 @@ export default function Inventory() {
         </Button>
       </div>
 
-      {/* Floating Alert Feedback Card */}
+      {/* ALERTAS*/}
       {alert && (
         <div
           className={`flex gap-3 p-4 rounded-xl border shadow-lg max-w-2xl animate-in fade-in slide-in-from-top-3 duration-300 ${
             alert.type === "success"
-              ? "bg-emerald-500/10 text-emerald-800 dark:text-emerald-200 border-emerald-500/35"
+              ? "bg-emerald-500/10 text-white dark:text-emerald-200 border-emerald-500/35"
               : "bg-red-500/10 text-red-800 dark:text-red-200 border-red-500/35"
           }`}
         >
@@ -269,7 +291,7 @@ export default function Inventory() {
         </div>
       )}
 
-      {/* Filters Card */}
+      {/* FILTROS*/}
       <Card className="shadow-sm">
         <CardContent className="p-4 flex flex-col md:flex-row items-center gap-4">
           {/* Search Input */}
@@ -317,12 +339,14 @@ export default function Inventory() {
         </CardContent>
       </Card>
 
-      {/* Products Table Card */}
+      {/* TABLA DE PRODUCTOS */}
       <Card className="overflow-hidden border-border bg-card shadow-sm">
         {loading ? (
           <div className="h-64 flex flex-col items-center justify-center gap-3">
             <RefreshCw className="size-7 text-primary animate-spin" />
-            <p className="text-xs text-muted-foreground">Cargando catálogo...</p>
+            <p className="text-xs text-muted-foreground">
+              Cargando catálogo...
+            </p>
           </div>
         ) : filteredProducts.length > 0 ? (
           <div className="overflow-x-auto">
@@ -332,7 +356,9 @@ export default function Inventory() {
                   <th className="p-4 font-semibold">Código / Nombre</th>
                   <th className="p-4 font-semibold">Categoría</th>
                   <th className="p-4 font-semibold">Stock</th>
-                  <th className="p-4 font-semibold">Precios (Compra / Venta)</th>
+                  <th className="p-4 font-semibold">
+                    Precios (Compra / Venta)
+                  </th>
                   <th className="p-4 font-semibold text-right">Acciones</th>
                 </tr>
               </thead>
@@ -345,38 +371,53 @@ export default function Inventory() {
                       key={p.id}
                       className="hover:bg-muted/30 transition-colors duration-150"
                     >
-                      {/* Name & Code */}
+                      {/* NOMBRE Y CODIGO */}
                       <td className="p-4">
-                        <div className="font-semibold text-foreground">{p.name}</div>
-                        <div className="text-xs text-muted-foreground font-mono mt-0.5">{p.code}</div>
+                        <div className="font-semibold text-foreground">
+                          {p.name}
+                        </div>
+                        <div className="text-xs text-muted-foreground font-mono mt-0.5">
+                          {p.code}
+                        </div>
                       </td>
 
-                      {/* Category */}
+                      {/* CATEGORIA*/}
                       <td className="p-4">
                         <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-secondary text-secondary-foreground">
                           {p.category?.name || "Sin Categoría"}
                         </span>
                       </td>
 
-                      {/* Stock Level */}
+                      {/* NIVEL DE STOCK*/}
                       <td className="p-4">
                         <div className="flex items-center gap-2">
-                          <span className={`font-bold ${isCritical ? "text-amber-500" : "text-foreground"}`}>
+                          <span
+                            className={`font-bold ${isCritical ? "text-amber-500" : "text-foreground"}`}
+                          >
                             {stock}
                           </span>
-                          <span className="text-xs text-muted-foreground">/ Min {p.stock_minimum}</span>
+                          <span className="text-xs text-muted-foreground">
+                            / Min {p.stock_minimum}
+                          </span>
                           {isCritical && (
-                            <span className="size-1.5 rounded-full bg-amber-500" title="Alerta Stock Mínimo" />
+                            <span
+                              className="size-1.5 rounded-full bg-amber-500"
+                              title="Alerta Stock Mínimo"
+                            />
                           )}
                         </div>
                       </td>
 
-                      {/* Prices */}
+                      {/* PRECIOS */}
                       <td className="p-4">
                         <div className="flex items-center gap-1.5">
-                          <span className="text-xs text-muted-foreground font-medium">C: ${p.price_buy.toFixed(2)}</span>
+                          <span className="text-xs text-muted-foreground font-medium">
+                            C: ${p.price_buy.toFixed(2)}
+                          </span>
                           <span className="text-border">|</span>
-                          <span className="font-semibold text-primary">V: ${p.price_sell.toFixed(2)}</span>
+                          <span className="font-semibold text-primary">
+                            V: ${p.price_sell.toFixed(2)}
+                          </span>
                         </div>
                       </td>
 
@@ -408,15 +449,18 @@ export default function Inventory() {
         ) : (
           <div className="h-64 flex flex-col items-center justify-center text-center p-8">
             <Package className="size-10 text-muted-foreground/35 mb-2" />
-            <p className="text-sm font-semibold text-foreground">No se encontraron productos</p>
+            <p className="text-sm font-semibold text-foreground">
+              No se encontraron productos
+            </p>
             <p className="text-xs text-muted-foreground mt-1 max-w-sm">
-              Prueba cambiando los filtros de búsqueda o agrega un nuevo producto al catálogo.
+              Prueba cambiando los filtros de búsqueda o agrega un nuevo
+              producto al catálogo.
             </p>
           </div>
         )}
       </Card>
 
-      {/* CREATE MODAL */}
+      {/* CREAR MODAL*/}
       <Dialog
         isOpen={isCreateOpen}
         onClose={() => setIsCreateOpen(false)}
@@ -425,7 +469,9 @@ export default function Inventory() {
         <form onSubmit={handleCreateProduct} className="space-y-4 pt-1">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-muted-foreground">Nombre</label>
+              <label className="text-xs font-semibold text-muted-foreground">
+                Nombre
+              </label>
               <Input
                 type="text"
                 name="name"
@@ -436,7 +482,9 @@ export default function Inventory() {
               />
             </div>
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-muted-foreground">Código de Referencia</label>
+              <label className="text-xs font-semibold text-muted-foreground">
+                Código de Referencia
+              </label>
               <Input
                 type="text"
                 name="code"
@@ -451,7 +499,9 @@ export default function Inventory() {
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-muted-foreground">Categoría</label>
+              <label className="text-xs font-semibold text-muted-foreground">
+                Categoría
+              </label>
               <Select
                 name="id_category"
                 required
@@ -468,7 +518,9 @@ export default function Inventory() {
               </Select>
             </div>
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-muted-foreground">Proveedor</label>
+              <label className="text-xs font-semibold text-muted-foreground">
+                Proveedor
+              </label>
               <Select
                 name="id_provider"
                 required
@@ -488,7 +540,9 @@ export default function Inventory() {
 
           <div className="grid grid-cols-3 gap-4">
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-muted-foreground">Peso (g)</label>
+              <label className="text-xs font-semibold text-muted-foreground">
+                Peso (g)
+              </label>
               <Input
                 type="number"
                 name="weight"
@@ -500,7 +554,9 @@ export default function Inventory() {
               />
             </div>
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-muted-foreground">Stock Actual</label>
+              <label className="text-xs font-semibold text-muted-foreground">
+                Stock Actual
+              </label>
               <Input
                 type="number"
                 name="current_stock"
@@ -511,7 +567,9 @@ export default function Inventory() {
               />
             </div>
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-muted-foreground">Stock Mínimo</label>
+              <label className="text-xs font-semibold text-muted-foreground">
+                Stock Mínimo
+              </label>
               <Input
                 type="number"
                 name="stock_minimum"
@@ -526,7 +584,9 @@ export default function Inventory() {
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-muted-foreground">Precio Compra ($)</label>
+              <label className="text-xs font-semibold text-muted-foreground">
+                Precio Compra ($)
+              </label>
               <Input
                 type="number"
                 step="0.01"
@@ -539,7 +599,9 @@ export default function Inventory() {
               />
             </div>
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-muted-foreground">Precio Venta ($)</label>
+              <label className="text-xs font-semibold text-muted-foreground">
+                Precio Venta ($)
+              </label>
               <Input
                 type="number"
                 step="0.01"
@@ -574,7 +636,7 @@ export default function Inventory() {
         </form>
       </Dialog>
 
-      {/* EDIT MODAL */}
+      {/* EDITAR MODAL */}
       <Dialog
         isOpen={isEditOpen}
         onClose={() => setIsEditOpen(false)}
@@ -583,7 +645,9 @@ export default function Inventory() {
         <form onSubmit={handleUpdateProduct} className="space-y-4 pt-1">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-muted-foreground">Nombre</label>
+              <label className="text-xs font-semibold text-muted-foreground">
+                Nombre
+              </label>
               <Input
                 type="text"
                 name="name"
@@ -594,7 +658,9 @@ export default function Inventory() {
               />
             </div>
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-muted-foreground">Código de Referencia</label>
+              <label className="text-xs font-semibold text-muted-foreground">
+                Código de Referencia
+              </label>
               <Input
                 type="text"
                 name="code"
@@ -608,7 +674,9 @@ export default function Inventory() {
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-muted-foreground">Categoría</label>
+              <label className="text-xs font-semibold text-muted-foreground">
+                Categoría
+              </label>
               <Select
                 name="id_category"
                 required
@@ -625,7 +693,9 @@ export default function Inventory() {
               </Select>
             </div>
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-muted-foreground">Proveedor</label>
+              <label className="text-xs font-semibold text-muted-foreground">
+                Proveedor
+              </label>
               <Select
                 name="id_provider"
                 required
@@ -645,7 +715,9 @@ export default function Inventory() {
 
           <div className="grid grid-cols-3 gap-4">
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-muted-foreground">Peso (g)</label>
+              <label className="text-xs font-semibold text-muted-foreground">
+                Peso (g)
+              </label>
               <Input
                 type="number"
                 name="weight"
@@ -657,7 +729,9 @@ export default function Inventory() {
               />
             </div>
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-muted-foreground">Stock Actual</label>
+              <label className="text-xs font-semibold text-muted-foreground">
+                Stock Actual
+              </label>
               <Input
                 type="number"
                 name="current_stock"
@@ -668,7 +742,9 @@ export default function Inventory() {
               />
             </div>
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-muted-foreground">Stock Mínimo</label>
+              <label className="text-xs font-semibold text-muted-foreground">
+                Stock Mínimo
+              </label>
               <Input
                 type="number"
                 name="stock_minimum"
@@ -683,7 +759,9 @@ export default function Inventory() {
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-muted-foreground">Precio Compra ($)</label>
+              <label className="text-xs font-semibold text-muted-foreground">
+                Precio Compra ($)
+              </label>
               <Input
                 type="number"
                 step="0.01"
@@ -696,7 +774,9 @@ export default function Inventory() {
               />
             </div>
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-muted-foreground">Precio Venta ($)</label>
+              <label className="text-xs font-semibold text-muted-foreground">
+                Precio Venta ($)
+              </label>
               <Input
                 type="number"
                 step="0.01"
@@ -731,7 +811,7 @@ export default function Inventory() {
         </form>
       </Dialog>
 
-      {/* DELETE VERIFICATION MODAL */}
+      {/* MODAL DE VERIFICACION*/}
       <Dialog
         isOpen={isDeleteOpen}
         onClose={() => setIsDeleteOpen(false)}
@@ -740,8 +820,11 @@ export default function Inventory() {
         <div className="space-y-4 pt-1">
           <p className="text-sm text-foreground">
             ¿Estás seguro de que deseas eliminar el producto{" "}
-            <span className="font-bold text-red-500">"{selectedProductName}"</span>? Esta acción es
-            irreversible y lo borrará permanentemente de la base de datos.
+            <span className="font-bold text-red-500">
+              "{selectedProductName}"
+            </span>
+            ? Esta acción es irreversible y lo borrará permanentemente de la
+            base de datos.
           </p>
 
           <div className="flex justify-end gap-3 pt-4 border-t border-border mt-6">
