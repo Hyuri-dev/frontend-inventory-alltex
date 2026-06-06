@@ -29,20 +29,20 @@ export function Dialog({ isOpen, onClose, title, children, className }: DialogPr
 
   return createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      {/* Backdrop */}
+      {/* Fondo / Capa superpuesta */}
       <div
         className="fixed inset-0 bg-background/80 backdrop-blur-sm transition-opacity duration-300"
         onClick={onClose}
       />
 
-      {/* Modal Container */}
+      {/* Contenedor del Modal */}
       <div
         className={cn(
           "relative z-50 w-full max-w-lg rounded-xl border border-border bg-card p-6 shadow-lg transition-all duration-300 animate-in fade-in zoom-in-95",
           className
         )}
       >
-        {/* Header */}
+        {/* Cabecera */}
         <div className="flex items-center justify-between pb-4 border-b border-border mb-4">
           <h2 className="text-lg font-semibold tracking-tight text-foreground">{title}</h2>
           <button
@@ -67,7 +67,7 @@ export function Dialog({ isOpen, onClose, title, children, className }: DialogPr
           </button>
         </div>
 
-        {/* Content */}
+        {/* Contenido */}
         <div className="max-h-[70vh] overflow-y-auto pr-1">
           {children}
         </div>

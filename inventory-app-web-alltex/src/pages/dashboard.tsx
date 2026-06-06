@@ -58,9 +58,9 @@ export default function Dashboard() {
         totalValue: totalVal,
       });
 
-      setLowStockProducts(lowStock.slice(0, 5)); // show top 5 low stock products
+      setLowStockProducts(lowStock.slice(0, 5)); // mostrar los 5 productos con menor stock
 
-      // Group products by category for the custom chart
+      // Agrupar productos por categoría para el gráfico personalizado
       const categoryGroups: { [key: string]: number } = {};
       products.forEach((p) => {
         const catName = p.category?.name || "Sin Categoría";
@@ -70,7 +70,7 @@ export default function Dashboard() {
       const chartData = Object.entries(categoryGroups).map(([name, count]) => ({
         name,
         count,
-      })).sort((a, b) => b.count - a.count).slice(0, 5); // top 5 categories
+      })).sort((a, b) => b.count - a.count).slice(0, 5); // las 5 categorías principales
 
       setCategoryChartData(chartData);
     } catch (error) {
@@ -99,12 +99,12 @@ export default function Dashboard() {
     );
   }
 
-  // Calculate highest count for SVG chart scaling
+  // Calcular el conteo más alto para la escala del gráfico SVG
   const maxCategoryCount = Math.max(...categoryChartData.map((d) => d.count), 1);
 
   return (
     <div className="space-y-6">
-      {/* Welcome Header */}
+      {/* Cabecera de Bienvenida */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Resumen de Operación</h1>
@@ -122,9 +122,9 @@ export default function Dashboard() {
         </Button>
       </div>
 
-      {/* Metric Cards Grid */}
+      {/* Cuadrícula de Tarjetas Métricas */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {/* Total Products Card */}
+        {/* Tarjeta de Total de Productos */}
         <Card className="hover:border-primary/40 transition-smooth">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
@@ -140,7 +140,7 @@ export default function Dashboard() {
           </CardContent>
         </Card>
 
-        {/* Low Stock Card */}
+        {/* Tarjeta de Stock Bajo */}
         <Card className={`hover:border-destructive/40 transition-smooth ${metrics.lowStockCount > 0 ? "border-amber-500/30 bg-amber-500/5 dark:bg-amber-500/2.5" : ""}`}>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
@@ -160,7 +160,7 @@ export default function Dashboard() {
           </CardContent>
         </Card>
 
-        {/* Categories Card */}
+        {/* Tarjeta de Categorías */}
         <Card className="hover:border-primary/40 transition-smooth">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
@@ -176,7 +176,7 @@ export default function Dashboard() {
           </CardContent>
         </Card>
 
-        {/* Providers Card */}
+        {/* Tarjeta de Proveedores */}
         <Card className="hover:border-primary/40 transition-smooth">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
@@ -193,9 +193,9 @@ export default function Dashboard() {
         </Card>
       </div>
 
-      {/* Main Charts & Notifications Grid */}
+      {/* Cuadrícula de Gráficos Principales y Notificaciones */}
       <div className="grid gap-6 md:grid-cols-7">
-        {/* SVG Chart Card (5 Cols on medium, 7 on base) */}
+        {/* Tarjeta de Gráfico SVG (5 columnas en mediano, 7 en base) */}
         <Card className="md:col-span-4">
           <CardHeader>
             <CardTitle className="text-base font-semibold flex items-center gap-2">
@@ -213,12 +213,12 @@ export default function Dashboard() {
                   const percentage = (data.count / maxCategoryCount) * 100;
                   return (
                     <div key={data.name} className="flex-1 flex flex-col items-center group relative h-full justify-end">
-                      {/* Tooltip */}
+                      {/* Información sobre herramientas (Tooltip) */}
                       <div className="absolute top-0 scale-0 group-hover:scale-100 transition-all duration-200 bg-slate-900 text-white dark:bg-white dark:text-slate-900 text-[10px] py-1 px-2 rounded-md -translate-y-4 shadow-md font-semibold z-10 whitespace-nowrap">
                         {data.count} {data.count === 1 ? "producto" : "productos"}
                       </div>
 
-                      {/* Bar */}
+                      {/* Barra */}
                       <div
                         style={{ height: `${Math.max(percentage, 8)}%` }}
                         className={`w-full rounded-t-lg transition-all duration-500 ease-out group-hover:opacity-85 ${index === 0
@@ -233,7 +233,7 @@ export default function Dashboard() {
                           }`}
                       />
 
-                      {/* Label */}
+                      {/* Etiqueta */}
                       <span className="text-[10px] text-muted-foreground font-semibold mt-2.5 truncate max-w-full text-center">
                         {data.name}
                       </span>
@@ -249,7 +249,7 @@ export default function Dashboard() {
           </CardContent>
         </Card>
 
-        {/* Low Stock Alerts Checklist (3 Cols) */}
+        {/* Lista de Alertas de Stock Bajo (3 columnas) */}
         <Card className="md:col-span-3">
           <CardHeader className="flex flex-row items-center justify-between pb-3">
             <div>
