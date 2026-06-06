@@ -143,10 +143,15 @@ export default function Inventory() {
     try {
       const payload = parseFormPayload();
 
-      // Validaciones simples de la interfaz de usuario
+      // Validaciones simples de la interfaz de usuario y tipos de datos
       if (
         !payload.name ||
         !payload.code ||
+        isNaN(payload.weight) ||
+        isNaN(payload.id_category) ||
+        isNaN(payload.id_provider) ||
+        isNaN(payload.current_stock) ||
+        isNaN(payload.stock_minimum) ||
         isNaN(payload.price_buy) ||
         isNaN(payload.price_sell)
       ) {
@@ -154,6 +159,36 @@ export default function Inventory() {
           "error",
           "Por favor completa todos los campos con valores correctos.",
         );
+        setActionLoading(false);
+        return;
+      }
+
+      if (payload.weight <= 0) {
+        triggerAlert("error", "El peso debe ser mayor a 0.");
+        setActionLoading(false);
+        return;
+      }
+
+      if (payload.current_stock <= 0) {
+        triggerAlert("error", "El stock actual debe ser mayor a 0.");
+        setActionLoading(false);
+        return;
+      }
+
+      if (payload.stock_minimum <= 0) {
+        triggerAlert("error", "El stock mínimo debe ser mayor a 0.");
+        setActionLoading(false);
+        return;
+      }
+
+      if (payload.price_buy <= 0) {
+        triggerAlert("error", "El precio de compra debe ser mayor a 0.");
+        setActionLoading(false);
+        return;
+      }
+
+      if (payload.price_sell <= 0) {
+        triggerAlert("error", "El precio de venta debe ser mayor a 0.");
         setActionLoading(false);
         return;
       }
@@ -205,6 +240,55 @@ export default function Inventory() {
     setActionLoading(true);
     try {
       const payload = parseFormPayload();
+
+      if (
+        !payload.name ||
+        !payload.code ||
+        isNaN(payload.weight) ||
+        isNaN(payload.id_category) ||
+        isNaN(payload.id_provider) ||
+        isNaN(payload.current_stock) ||
+        isNaN(payload.stock_minimum) ||
+        isNaN(payload.price_buy) ||
+        isNaN(payload.price_sell)
+      ) {
+        triggerAlert(
+          "error",
+          "Por favor completa todos los campos con valores correctos.",
+        );
+        setActionLoading(false);
+        return;
+      }
+
+      if (payload.weight <= 0) {
+        triggerAlert("error", "El peso debe ser mayor a 0.");
+        setActionLoading(false);
+        return;
+      }
+
+      if (payload.current_stock <= 0) {
+        triggerAlert("error", "El stock actual debe ser mayor a 0.");
+        setActionLoading(false);
+        return;
+      }
+
+      if (payload.stock_minimum <= 0) {
+        triggerAlert("error", "El stock mínimo debe ser mayor a 0.");
+        setActionLoading(false);
+        return;
+      }
+
+      if (payload.price_buy <= 0) {
+        triggerAlert("error", "El precio de compra debe ser mayor a 0.");
+        setActionLoading(false);
+        return;
+      }
+
+      if (payload.price_sell <= 0) {
+        triggerAlert("error", "El precio de venta debe ser mayor a 0.");
+        setActionLoading(false);
+        return;
+      }
 
       if (payload.price_buy > payload.price_sell) {
         triggerAlert(
@@ -563,7 +647,7 @@ export default function Inventory() {
                 type="number"
                 name="weight"
                 required
-                min="0"
+                min="1"
                 value={formData.weight}
                 onChange={handleInputChange}
                 className="bg-transparent text-foreground"
@@ -576,7 +660,7 @@ export default function Inventory() {
               <Input
                 type="number"
                 name="current_stock"
-                min="0"
+                min="1"
                 value={formData.current_stock}
                 onChange={handleInputChange}
                 className="bg-transparent text-foreground"
@@ -590,7 +674,7 @@ export default function Inventory() {
                 type="number"
                 name="stock_minimum"
                 required
-                min="0"
+                min="1"
                 value={formData.stock_minimum}
                 onChange={handleInputChange}
                 className="bg-transparent text-foreground"
@@ -608,7 +692,7 @@ export default function Inventory() {
                 step="0.01"
                 name="price_buy"
                 required
-                min="0"
+                min="0.01"
                 value={formData.price_buy}
                 onChange={handleInputChange}
                 className="bg-transparent text-foreground"
@@ -623,7 +707,7 @@ export default function Inventory() {
                 step="0.01"
                 name="price_sell"
                 required
-                min="0"
+                min="0.01"
                 value={formData.price_sell}
                 onChange={handleInputChange}
                 className="bg-transparent text-foreground"
@@ -738,7 +822,7 @@ export default function Inventory() {
                 type="number"
                 name="weight"
                 required
-                min="0"
+                min="1"
                 value={formData.weight}
                 onChange={handleInputChange}
                 className="bg-transparent text-foreground"
@@ -751,7 +835,7 @@ export default function Inventory() {
               <Input
                 type="number"
                 name="current_stock"
-                min="0"
+                min="1"
                 value={formData.current_stock}
                 onChange={handleInputChange}
                 className="bg-transparent text-foreground"
@@ -765,7 +849,7 @@ export default function Inventory() {
                 type="number"
                 name="stock_minimum"
                 required
-                min="0"
+                min="1"
                 value={formData.stock_minimum}
                 onChange={handleInputChange}
                 className="bg-transparent text-foreground"
@@ -783,7 +867,7 @@ export default function Inventory() {
                 step="0.01"
                 name="price_buy"
                 required
-                min="0"
+                min="0.01"
                 value={formData.price_buy}
                 onChange={handleInputChange}
                 className="bg-transparent text-foreground"
@@ -798,7 +882,7 @@ export default function Inventory() {
                 step="0.01"
                 name="price_sell"
                 required
-                min="0"
+                min="0.01"
                 value={formData.price_sell}
                 onChange={handleInputChange}
                 className="bg-transparent text-foreground"
