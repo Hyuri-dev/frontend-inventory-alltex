@@ -4,6 +4,8 @@ import Dashboard from './pages/dashboard';
 import Inventory from './pages/inventory';
 import Categories from './pages/categories';
 import Users from './pages/users';
+import Providers from './pages/providers';
+import Zones from './pages/zones';
 import Layout from './components/Layout';
 import './App.css';
 
@@ -19,6 +21,8 @@ const router = createBrowserRouter(
         <Route path="/inventory" element={<Inventory />} />
         <Route path="/categories" element={<Categories />} />
         <Route path="/users" element={<Users />} />
+        <Route path="/providers" element={<Providers />} />
+        <Route path="/zones" element={<Zones />} />
         {/* Redirigir la ruta base con sesión iniciada al panel */}
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
       </Route>

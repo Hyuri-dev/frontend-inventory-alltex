@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { Outlet, useNavigate, useLocation, Link } from "react-router";
-import { LayoutDashboard, Package, LogOut, Menu, X, Moon, Sun, ChevronDown, Tags, Users } from "lucide-react";
+import { LayoutDashboard, Package, LogOut, Menu, X, Moon, Sun, ChevronDown, Tags, Users, Truck, MapPin } from "lucide-react";
 
 interface UserSession {
   id: number;
@@ -92,6 +92,16 @@ export default function Layout() {
       name: "Categorías",
       path: "/categories",
       icon: Tags,
+    },
+    {
+      name: "Proveedores",
+      path: "/providers",
+      icon: Truck,
+    },
+    {
+      name: "Zonas",
+      path: "/zones",
+      icon: MapPin,
     },
   ];
 
