@@ -158,6 +158,15 @@ export default function Inventory() {
         return;
       }
 
+      if (payload.price_buy > payload.price_sell) {
+        triggerAlert(
+          "error",
+          "El precio de compra no puede ser mayor al precio de venta.",
+        );
+        setActionLoading(false);
+        return;
+      }
+
       await api.post("/products/create", payload);
       triggerAlert("success", "Producto creado exitosamente.");
       setIsCreateOpen(false);
@@ -196,6 +205,15 @@ export default function Inventory() {
     setActionLoading(true);
     try {
       const payload = parseFormPayload();
+
+      if (payload.price_buy > payload.price_sell) {
+        triggerAlert(
+          "error",
+          "El precio de compra no puede ser mayor al precio de venta.",
+        );
+        setActionLoading(false);
+        return;
+      }
       await api.put(`/products/update/id/${selectedProductId}`, payload);
       triggerAlert("success", "Producto actualizado exitosamente.");
       setIsEditOpen(false);
