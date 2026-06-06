@@ -162,7 +162,7 @@ export default function UsersManagement() {
   const handleUpdateUser = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedUserId) return;
-    
+
     setActionLoading(true);
     try {
       const payload: any = {
@@ -259,11 +259,10 @@ export default function UsersManagement() {
       {/* Alertas */}
       {alert && (
         <div
-          className={`flex gap-3 p-4 rounded-xl border shadow-lg max-w-2xl animate-in fade-in slide-in-from-top-3 duration-300 ${
-            alert.type === "success"
-              ? "bg-emerald-500/10 text-emerald-800 dark:text-emerald-200 border-emerald-500/35"
-              : "bg-red-500/10 text-red-800 dark:text-red-200 border-red-500/35"
-          }`}
+          className={`flex gap-3 p-4 rounded-xl border shadow-lg max-w-2xl animate-in fade-in slide-in-from-top-3 duration-300 ${alert.type === "success"
+            ? "bg-emerald-500/10 text-white-900 dark:text-black-900 border-emerald-500/35"
+            : "bg-red-500/10 text-red-900 dark:text-red-200 border-red-500/35"
+            }`}
         >
           {alert.type === "success" ? (
             <CheckCircle className="size-5 shrink-0 text-emerald-500" />

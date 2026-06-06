@@ -10,20 +10,20 @@ import './App.css';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      {/* Public Route */}
+      {/* Ruta Pública */}
       <Route path="/login" element={<Login />} />
 
-      {/* Protected Routes Layout Shell */}
+      {/* Capa base para Rutas Protegidas */}
       <Route element={<Layout />}>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/inventory" element={<Inventory />} />
         <Route path="/categories" element={<Categories />} />
         <Route path="/users" element={<Users />} />
-        {/* Redirect base logged-in path to dashboard */}
+        {/* Redirigir la ruta base con sesión iniciada al panel */}
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
       </Route>
 
-      {/* Catch-all redirect to login */}
+      {/* Redirección por defecto al inicio de sesión (Catch-all) */}
       <Route path="*" element={<Navigate to="/login" replace />} />
     </>
   )

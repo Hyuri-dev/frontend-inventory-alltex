@@ -74,7 +74,7 @@ export default function Categories() {
     setActionLoading(true);
     try {
       const payload = { name: formData.name.trim() };
-      
+
       if (!payload.name) {
         triggerAlert("error", "El nombre de la categoría es requerido.");
         setActionLoading(false);
@@ -105,7 +105,7 @@ export default function Categories() {
   const handleUpdateCategory = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedCategoryId) return;
-    
+
     setActionLoading(true);
     try {
       const payload = { name: formData.name.trim() };
@@ -176,11 +176,10 @@ export default function Categories() {
       {/* Alertas */}
       {alert && (
         <div
-          className={`flex gap-3 p-4 rounded-xl border shadow-lg max-w-2xl animate-in fade-in slide-in-from-top-3 duration-300 ${
-            alert.type === "success"
-              ? "bg-emerald-500/10 text-emerald-800 dark:text-emerald-200 border-emerald-500/35"
-              : "bg-red-500/10 text-red-800 dark:text-red-200 border-red-500/35"
-          }`}
+          className={`flex gap-3 p-4 rounded-xl border shadow-lg max-w-2xl animate-in fade-in slide-in-from-top-3 duration-300 ${alert.type === "success"
+            ? "bg-emerald-500/10 text-white-900 dark:text-black-900 border-emerald-500/35"
+            : "bg-red-500/10 text-red-900 dark:text-red-200 border-red-500/35"
+            }`}
         >
           {alert.type === "success" ? (
             <CheckCircle className="size-5 shrink-0 text-emerald-500" />

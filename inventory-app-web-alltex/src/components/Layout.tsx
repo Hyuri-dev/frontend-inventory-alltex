@@ -21,7 +21,7 @@ export default function Layout() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
 
-  // Authentication check
+  // Verificación de autenticación
   useEffect(() => {
     const storedUser = localStorage.getItem("alltex_session");
     if (!storedUser) {
@@ -36,7 +36,7 @@ export default function Layout() {
     }
   }, [navigate]);
 
-  // Dark mode initial sync
+  // Sincronización inicial del modo oscuro
   useEffect(() => {
     const isDark = document.documentElement.classList.contains("dark") ||
       localStorage.getItem("theme") === "dark";
@@ -49,7 +49,7 @@ export default function Layout() {
     }
   }, []);
 
-  // Close dropdown on click outside
+
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
@@ -108,9 +108,9 @@ export default function Layout() {
 
   return (
     <div className="min-h-screen bg-background text-foreground flex transition-colors duration-300">
-      {/* Sidebar - Desktop */}
+      {/* Barra lateral - Escritorio */}
       <aside className="hidden md:flex flex-col w-64 border-r border-border bg-card shadow-sm z-30">
-        {/* Brand Header */}
+        {/* Cabecera de la Marca */}
         <div className="h-16 flex items-center px-6 border-b border-border gap-2.5">
           <div className="size-8 rounded-lg bg-primary flex items-center justify-center text-primary-foreground font-bold text-lg shadow-sm">
             A
@@ -121,7 +121,7 @@ export default function Layout() {
           </div>
         </div>
 
-        {/* Sidebar Nav */}
+        {/* Navegación de la barra lateral */}
         <nav className="flex-1 p-4 space-y-1">
           {menuItems.map((item) => {
             const isActive = location.pathname === item.path;
@@ -142,7 +142,7 @@ export default function Layout() {
           })}
         </nav>
 
-        {/* User Quick Info */}
+        {/* Información rápida del usuario */}
         <div className="p-4 border-t border-border flex items-center gap-3">
           <div className="size-9 rounded-full bg-secondary flex items-center justify-center text-secondary-foreground font-semibold">
             {user.name.charAt(0).toUpperCase()}
@@ -154,15 +154,15 @@ export default function Layout() {
         </div>
       </aside>
 
-      {/* Sidebar - Mobile Toggle Menu */}
+      {/* Barra lateral - Menú de alternancia móvil */}
       {isSidebarOpen && (
         <div className="md:hidden fixed inset-0 z-40 flex">
-          {/* Backdrop */}
+          {/* Fondo / Capa superpuesta */}
           <div
             className="fixed inset-0 bg-background/80 backdrop-blur-sm"
             onClick={() => setIsSidebarOpen(false)}
           />
-          {/* Mobile menu container */}
+          {/* Contenedor del menú móvil */}
           <aside className="relative flex flex-col w-64 bg-card border-r border-border p-4 shadow-xl animate-in slide-in-from-left duration-200">
             <div className="flex items-center justify-between pb-4 border-b border-border mb-4">
               <div className="flex items-center gap-2">
@@ -211,9 +211,9 @@ export default function Layout() {
         </div>
       )}
 
-      {/* Main Content Area */}
+      {/* Área de contenido principal */}
       <div className="flex-1 flex flex-col min-w-0">
-        {/* Navbar */}
+        {/* Barra de navegación */}
         <header className="h-16 border-b border-border bg-card/50 backdrop-blur-md sticky top-0 z-20 flex items-center justify-between px-4 md:px-6">
           <div className="flex items-center gap-3">
             <button
@@ -226,7 +226,7 @@ export default function Layout() {
           </div>
 
           <div className="flex items-center gap-2.5">
-            {/* Theme Toggle */}
+            {/* Alternador de tema */}
             <button
               onClick={toggleDarkMode}
               className="p-2 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
@@ -235,7 +235,7 @@ export default function Layout() {
               {isDarkMode ? <Sun className="size-4.5" /> : <Moon className="size-4.5" />}
             </button>
 
-            {/* Profile Dropdown */}
+            {/* Menú desplegable de perfil */}
             <div className="relative" ref={userMenuRef}>
               <button
                 onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
@@ -267,7 +267,7 @@ export default function Layout() {
           </div>
         </header>
 
-        {/* Dashboard or Page body wrapper */}
+        {/* Contenedor del cuerpo de la página o panel */}
         <main className="flex-1 p-4 md:p-6 overflow-y-auto bg-background/50">
           <Outlet />
         </main>

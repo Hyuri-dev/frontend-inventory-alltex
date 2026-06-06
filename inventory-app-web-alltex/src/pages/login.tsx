@@ -13,7 +13,7 @@ export default function Login() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  // Redirect to dashboard if session already exists
+  // Redirigir al panel si la sesión ya existe
   useEffect(() => {
     const session = localStorage.getItem("alltex_session");
     if (session) {
@@ -58,7 +58,7 @@ export default function Login() {
       <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[35rem] h-[35rem] bg-indigo-600/10 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-[35rem] h-[35rem] bg-violet-600/10 rounded-full blur-[100px] pointer-events-none" />
 
-      {/* Login Card */}
+      {/* Tarjeta de Inicio de Sesión */}
       <Card className="w-full max-w-md border-slate-800 bg-slate-900/40 backdrop-blur-xl shadow-2xl relative z-10 text-white transition-all duration-300">
         <CardHeader className="space-y-2.5 pb-6 text-center">
           <div className="mx-auto size-12 rounded-2xl bg-indigo-600/20 text-indigo-400 flex items-center justify-center border border-indigo-500/25 shadow-inner">
@@ -81,7 +81,7 @@ export default function Login() {
               </div>
             )}
 
-            {/* Username Input */}
+            {/* Entrada de Usuario */}
             <div className="space-y-1.5">
               <label className="text-xs font-semibold text-slate-300 tracking-wide uppercase">Usuario</label>
               <div className="relative">
@@ -99,7 +99,7 @@ export default function Login() {
               </div>
             </div>
 
-            {/* Password Input */}
+            {/* Entrada de Contraseña */}
             <div className="space-y-1.5">
               <label className="text-xs font-semibold text-slate-300 tracking-wide uppercase">Contraseña</label>
               <div className="relative">

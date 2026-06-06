@@ -113,7 +113,7 @@ export default function Inventory() {
     setTimeout(() => setAlert(null), 5000);
   };
 
-  // Input change handler
+  // Manejador de cambio de entrada
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
@@ -143,7 +143,7 @@ export default function Inventory() {
     try {
       const payload = parseFormPayload();
 
-      // Simple UI validations
+      // Validaciones simples de la interfaz de usuario
       if (
         !payload.name ||
         !payload.code ||
@@ -233,7 +233,7 @@ export default function Inventory() {
     }
   };
 
-  // Filter Logic
+  // Lógica de filtrado
   const filteredProducts = products.filter((p) => {
     const matchesSearch =
       p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -250,7 +250,7 @@ export default function Inventory() {
 
   return (
     <div className="space-y-6">
-      {/* Header Info */}
+      {/* Información de la Cabecera */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">
@@ -276,11 +276,10 @@ export default function Inventory() {
       {/* ALERTAS*/}
       {alert && (
         <div
-          className={`flex gap-3 p-4 rounded-xl border shadow-lg max-w-2xl animate-in fade-in slide-in-from-top-3 duration-300 ${
-            alert.type === "success"
-              ? "bg-emerald-500/10 text-white dark:text-emerald-200 border-emerald-500/35"
-              : "bg-red-500/10 text-red-800 dark:text-red-200 border-red-500/35"
-          }`}
+          className={`flex gap-3 p-4 rounded-xl border shadow-lg max-w-2xl animate-in fade-in slide-in-from-top-3 duration-300 ${alert.type === "success"
+            ? "bg-emerald-500/10 text-white-900 dark:text-black-900 border-emerald-500/35"
+            : "bg-red-500/10 text-red-900 dark:text-red-200 border-red-500/35"
+            }`}
         >
           {alert.type === "success" ? (
             <CheckCircle className="size-5 shrink-0 text-emerald-500" />
@@ -294,7 +293,7 @@ export default function Inventory() {
       {/* FILTROS*/}
       <Card className="shadow-sm">
         <CardContent className="p-4 flex flex-col md:flex-row items-center gap-4">
-          {/* Search Input */}
+          {/* Entrada de Búsqueda */}
           <div className="relative w-full md:w-80">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-muted-foreground">
               <Search className="size-4" />
@@ -308,7 +307,7 @@ export default function Inventory() {
             />
           </div>
 
-          {/* Category Filter */}
+          {/* Filtro de Categoría */}
           <div className="w-full md:w-56">
             <Select
               value={categoryFilter}
@@ -324,14 +323,13 @@ export default function Inventory() {
             </Select>
           </div>
 
-          {/* Stock Alert Switch Button */}
+          {/* Botón de Alternancia de Alerta de Stock */}
           <button
             onClick={() => setStockAlertFilter(!stockAlertFilter)}
-            className={`w-full md:w-auto px-4 py-2.5 rounded-lg border text-xs font-semibold tracking-wide uppercase transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 ${
-              stockAlertFilter
-                ? "bg-amber-500/15 border-amber-500/40 text-amber-600 dark:text-amber-400 font-bold"
-                : "border-border text-muted-foreground hover:bg-muted hover:text-foreground"
-            }`}
+            className={`w-full md:w-auto px-4 py-2.5 rounded-lg border text-xs font-semibold tracking-wide uppercase transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 ${stockAlertFilter
+              ? "bg-amber-500/15 border-amber-500/40 text-amber-600 dark:text-amber-400 font-bold"
+              : "border-border text-muted-foreground hover:bg-muted hover:text-foreground"
+              }`}
           >
             <AlertTriangle className="size-3.5" />
             Alerta Stock Mínimo
@@ -421,7 +419,7 @@ export default function Inventory() {
                         </div>
                       </td>
 
-                      {/* Edit / Delete */}
+                      {/* Editar / Eliminar */}
                       <td className="p-4 text-right">
                         <div className="flex items-center justify-end gap-1">
                           <button
