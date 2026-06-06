@@ -276,11 +276,10 @@ export default function Inventory() {
       {/* ALERTAS*/}
       {alert && (
         <div
-          className={`flex gap-3 p-4 rounded-xl border shadow-lg max-w-2xl animate-in fade-in slide-in-from-top-3 duration-300 ${
-            alert.type === "success"
-              ? "bg-emerald-500/10 text-white dark:text-emerald-200 border-emerald-500/35"
-              : "bg-red-500/10 text-red-800 dark:text-red-200 border-red-500/35"
-          }`}
+          className={`flex gap-3 p-4 rounded-xl border shadow-lg max-w-2xl animate-in fade-in slide-in-from-top-3 duration-300 ${alert.type === "success"
+            ? "bg-emerald-500/10 text-white-900 dark:text-black-900 border-emerald-500/35"
+            : "bg-red-500/10 text-red-900 dark:text-red-200 border-red-500/35"
+            }`}
         >
           {alert.type === "success" ? (
             <CheckCircle className="size-5 shrink-0 text-emerald-500" />
@@ -327,11 +326,10 @@ export default function Inventory() {
           {/* Botón de Alternancia de Alerta de Stock */}
           <button
             onClick={() => setStockAlertFilter(!stockAlertFilter)}
-            className={`w-full md:w-auto px-4 py-2.5 rounded-lg border text-xs font-semibold tracking-wide uppercase transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 ${
-              stockAlertFilter
-                ? "bg-amber-500/15 border-amber-500/40 text-amber-600 dark:text-amber-400 font-bold"
-                : "border-border text-muted-foreground hover:bg-muted hover:text-foreground"
-            }`}
+            className={`w-full md:w-auto px-4 py-2.5 rounded-lg border text-xs font-semibold tracking-wide uppercase transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 ${stockAlertFilter
+              ? "bg-amber-500/15 border-amber-500/40 text-amber-600 dark:text-amber-400 font-bold"
+              : "border-border text-muted-foreground hover:bg-muted hover:text-foreground"
+              }`}
           >
             <AlertTriangle className="size-3.5" />
             Alerta Stock Mínimo
